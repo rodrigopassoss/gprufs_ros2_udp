@@ -22,3 +22,9 @@ No que se refere ao Octave, ainda não existe o pacote ROS 2. Levando isso em co
 # Exemplos usando um Lidar
 
 Esse exemplo é demonstrado usando o simulador [Coppelia](https://manual.coppeliarobotics.com/), no entanto um robô real poderia ser utilizado do mesmo modo, sem alterar os códigos. Esse é um dos principais motivos de usar o ROS no fim das contas.
+
+A Figura abaixo mostra como ficou o grafo da rede ROS 2.
+
+![rqt_graph](https://github.com/rodrigopassoss/gprufs_ros2_udp/blob/main/rqt_graph.png)
+
+O nó `matlab_udp_link`
