@@ -38,10 +38,10 @@ Para esse exemplo têm-se os seguintes códigos:
 
 | Código               | Descrição               |
 |----------------------|-------------------------|
-| [lidar_test.m](https://github.com/rodrigopassoss/gprufs_ros2_udp/blob/main/coppelia_calmaN.png)     | Teste com o lidar, referente a aquisição das informações e um plot dos dados para Debug. | 
-| [lidar_test_octave.m](https://github.com/rodrigopassoss/gprufs_ros2_udp/blob/main/coppelia_calmaN.png)     | Teste com o lidar, referente a aquisição das informações e um plot dos dados para Debug. No Ocatave | 
-| [walk.m](https://github.com/rodrigopassoss/gprufs_ros2_udp/blob/main/coppelia_calmaN.png)     | Controlador simples para o robô, que usa as informações do lidar para navegar pelo ambiente sem colidir com os obstáculos. | 
-| [walk_octave.m](https://github.com/rodrigopassoss/gprufs_ros2_udp/blob/main/coppelia_calmaN.png)     | Controlador simples para o robô, que usa as informações do lidar para navegar pelo ambiente sem colidir com os obstáculos. No Octave. | 
+| [lidar_test.m](https://github.com/rodrigopassoss/gprufs_ros2_udp/blob/main/lidar_test.m)     | Teste com o lidar, referente a aquisição das informações e um plot dos dados para Debug. | 
+| [lidar_test_octave.m](https://github.com/rodrigopassoss/gprufs_ros2_udp/blob/main/lidar_test_octave.m)       | Teste com o lidar, referente a aquisição das informações e um plot dos dados para Debug. No Ocatave | 
+| [walk.m](https://github.com/rodrigopassoss/gprufs_ros2_udp/blob/main/walk.m)       | Controlador simples para o robô, que usa as informações do lidar para navegar pelo ambiente sem colidir com os obstáculos. | 
+| [walk_octave.m](https://github.com/rodrigopassoss/gprufs_ros2_udp/blob/main/walk_octave.m)     | Controlador simples para o robô, que usa as informações do lidar para navegar pelo ambiente sem colidir com os obstáculos. No Octave. | 
 
 </div>
 
