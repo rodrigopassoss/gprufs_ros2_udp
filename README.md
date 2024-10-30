@@ -19,3 +19,6 @@ No entanto, para testes realizados com a versão 2020a do MATLAB (versão Bouncy
 
 No que se refere ao Octave, ainda não existe o pacote ROS 2. Levando isso em conta, juntamente com os problemas com a versão 2020a do MATLAB, foi desenvolvido uma estratégia alternativa, que consiste utilizar um nó ROS 2, em python ou C++, que se comunica via UDP com o MATLAB e Octave.
 
+# Exemplos usando um Lidar
+
+Esse exemplo é demonstrado usando o simulador [Coppelia](https://manual.coppeliarobotics.com/), no entanto um robô real poderia ser utilizado do mesmo modo, sem alterar os códigos. Esse é um dos principais motivos de usar o ROS no fim das contas.
