@@ -131,15 +131,15 @@ end
 
 As linhas abaixo são usadas para configurar o IP e as portas que vão ser usadas para envio e recebimento dos dados:
 <pre>
-    % Configurações de UDP
-    udpReceiver = udp('127.0.0.1', 12346, 'LocalPort', 12346);
-    fopen(udpReceiver);
-    
-    udpSender = udp('127.0.0.1', 12345, 'RemotePort', 12345);
-    fopen(udpSender);
-</pre>
-    
+% Configurações de UDP
+udpReceiver = udp('127.0.0.1', 12346, 'LocalPort', 12346);
+fopen(udpReceiver);
 
+udpSender = udp('127.0.0.1', 12345, 'RemotePort', 12345);
+fopen(udpSender);
+</pre>
+
+O loop `while` é executado durante um intervalo de tempo definido pela variável `duracao`. Dentro do loop, primeiro é verificado se tem dados disponíveis no receptor UDP, ou seja, se chegaram os dados do Lidar (recebidos do nó `matlab_udp_link`). Caso haja dados no receptor, estes são lidos e processados para cálcular as velocidades `vL` e `vR` e são transmitidas via UDP por meio da função `sendVelocity(udpSender, vL, vR);` para o nó `matlab_udp_link`.
 
 
 
