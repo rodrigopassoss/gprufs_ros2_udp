@@ -129,6 +129,18 @@ end
 
 </pre>
 
+As linhas abaixo são usadas para configurar o IP e as portas que vão ser usadas para envio e recebimento dos dados:
+<pre>
+    % Configurações de UDP
+    udpReceiver = udp('127.0.0.1', 12346, 'LocalPort', 12346);
+    fopen(udpReceiver);
+    
+    udpSender = udp('127.0.0.1', 12345, 'RemotePort', 12345);
+    fopen(udpSender);
+</pre>
+    
+
+
 
 
 
