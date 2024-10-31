@@ -19,7 +19,7 @@ No entanto, para testes realizados com a versão 2020a do MATLAB (versão Bouncy
 
 No que se refere ao Octave, ainda não existe o pacote ROS 2. Levando isso em conta, juntamente com os problemas com a versão 2020a do MATLAB, foi desenvolvido uma estratégia alternativa, que consiste utilizar um nó ROS 2, em python ou C++, que se comunica via UDP com o MATLAB e Octave.
 
-# Exemplos usando um Lidar
+## Exemplos usando um Lidar
 
 Esse exemplo é demonstrado usando o simulador [Coppelia](https://manual.coppeliarobotics.com/), no entanto um robô real poderia ser utilizado do mesmo modo, sem alterar os códigos. Esse é um dos principais motivos de usar o ROS no fim das contas.
 
@@ -44,6 +44,90 @@ Para esse exemplo têm-se os seguintes códigos:
 | [walk_octave.m](https://github.com/rodrigopassoss/gprufs_ros2_udp/blob/main/walk_octave.m)     | Controlador simples para o robô, que usa as informações do lidar para navegar pelo ambiente sem colidir com os obstáculos. Com Octave. | 
 
 </div>
+
+
+## A Estrutura Básica do Código
+
+Todos os códigos `.m` presentes nesse repositório possuem a mesma estrutura. Dessa forma, para entender como os códigos estão organizados, vamos analisar o código `walk.m`:
+
+<pre>
+clc
+clear
+close all
+
+
+% Configurações de UDP
+udpReceiver = udp('127.0.0.1', 12346, 'LocalPort', 12346);
+fopen(udpReceiver);
+
+udpSender = udp('127.0.0.1', 12345, 'RemotePort', 12345);
+fopen(udpSender);
+
+
+% Loop de verificação para simular callback de Lidar
+disp('Aguardando dados de Lidar...');
+duracao = 50;
+t = 0;
+while t<duracao
+    tic
+    % Verifica se há dados disponíveis
+    if udpReceiver.BytesAvailable > 0
+        data = fread(udpReceiver, udpReceiver.BytesAvailable, 'uint8');
+
+        % Converte os bytes de volta para um valor float
+        ranges = typecast(uint8(data), 'single');
+
+        % Teste do Lidar
+        angulos = linspace(0,2*pi,numel(ranges))';
+        idc = find(ranges>0);
+        ranges = ranges(idc);
+        angulos = angulos(idc);
+        % Selecionado apenas as medidas frontais
+        idc = find(cos(angulos) < 0);  % Índices onde cos(angulos) < 0
+        angulos = angulos(idc);          % Ângulos frontais
+        ranges = ranges(idc);    % Distâncias correspondentes
+
+        % Determinação das menores distâncias de cada lado
+        indicesR = find(sin(angulos) > 0);  % Índices do lado direito
+        dR = min(ranges(indicesR));      % Menor distância do lado direito
+
+        indicesL = find(sin(angulos) < 0);  % Índices do lado esquerdo
+        dL = min(ranges(indicesL));      % Menor distância do lado esquerdo
+
+        % Cálculos das velocidades com correção para desvio de obstáculo
+        vL = 7.0;  % Velocidade inicial para o lado esquerdo
+        vR = 7.0;  % Velocidade inicial para o lado direito
+
+        if dR < 0.5
+            vL = 7.0 - 7.0 * (1 - tanh((dR - 0.25) * 5));
+        end
+
+        if dL < 0.5
+            vR = 7.0 - 3.5 * (1 - tanh((dL - 0.25) * 5));
+        end
+
+        % Envia das velocidades das rodas: vL e vR
+        sendVelocity(udpSender, vL, vR);
+    end
+    t = t + toc
+    % Pausa para controlar a taxa de verificação
+%     pause(0.1);
+end
+
+
+%% Fecha as portas udp
+sendVelocity(udpSender, 0.0, 0.0)
+fclose(udpSender);
+fclose(udpReceiver);
+
+%% Função para enviar comandos de velocidade
+function sendVelocity(udpSender, vL, vR)
+    fprintf('Enviando Velocidades...\n');
+    dataToSend = typecast([single(vL), single(vR)], 'uint8'); % Converte floats para bytes
+    fwrite(udpSender, dataToSend, 'uint8');
+end
+
+</pre>
 
 
 
