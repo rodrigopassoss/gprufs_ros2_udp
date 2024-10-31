@@ -68,7 +68,7 @@ fopen(udpSender);
 disp('Aguardando dados de Lidar...');
 duracao = 50;
 t = 0;
-while t<duracao
+while t < duracao
     tic
     % Verifica se há dados disponíveis
     if udpReceiver.BytesAvailable > 0
@@ -128,6 +128,8 @@ function sendVelocity(udpSender, vL, vR)
 end
 
 </pre>
+
+
 
 
 
