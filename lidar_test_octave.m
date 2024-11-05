@@ -25,6 +25,7 @@ p1 = plot(0,0,'.b','MarkerSize',15);
 disp('Aguardando dados de Lidar...');
 duracao = 20;
 t = 0;
+T = [];
 while t<duracao
 
     tic
@@ -47,8 +48,10 @@ while t<duracao
 
         % Envia das velocidades das rodas: vL e vR
         sendVelocity(udpSender, 0.0, 0.0);
+        T = [T toc]
+        t = t + T(end);
     end
-    t = t + toc
+%     t = t + toc
     % Pausa para controlar a taxa de verificação
 %     pause(0.1);
 end
