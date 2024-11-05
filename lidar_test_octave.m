@@ -26,9 +26,12 @@ disp('Aguardando dados de Lidar...');
 duracao = 20;
 t = 0;
 T = [];
+flag = false;
 while t<duracao
-
-    tic
+    if ~flag
+        tic
+        flag = true;
+    end
     % Verifica se há dados disponíveis
     if udpReceiver.bytesavailable > 0
         data = fread(udpReceiver, udpReceiver.bytesavailable, 'uint8');
@@ -50,6 +53,7 @@ while t<duracao
         sendVelocity(udpSender, 0.0, 0.0);
         T = [T toc]
         t = t + T(end);
+        flag = false;
     end
 %     t = t + toc
     % Pausa para controlar a taxa de verificação

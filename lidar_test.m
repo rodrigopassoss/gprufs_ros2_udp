@@ -15,11 +15,15 @@ figure(1)
 p1 = plot(0,0,'.b','MarkerSize',15);
 % Loop de verificação para simular callback de Lidar
 disp('Aguardando dados de Lidar...');
-duracao = 20;
+duracao = 200;
 t = 0;
 T = [];
+flag = false;
 while t<duracao
-    tic
+    if ~flag
+        tic
+        flag = true;
+    end
     % Verifica se há dados disponíveis
     if udpReceiver.BytesAvailable > 0
         data = fread(udpReceiver, udpReceiver.BytesAvailable, 'uint8');
@@ -39,8 +43,9 @@ while t<duracao
 
         % Envia das velocidades das rodas: vL e vR
         sendVelocity(udpSender, 0.0, 0.0);
-        T = [T toc]
-        t = t + T(end);
+        T = [T toc];
+        t = t + T(end)
+        flag = false;
     end
     
     % Pausa para controlar a taxa de verificação
