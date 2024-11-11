@@ -25,7 +25,7 @@ t = 0;
 
 while t < duracao
     tic;
-
+    flushinput(udpReceiver);
     % Verifica se há dados disponíveis para leitura
     if udpReceiver.bytesavailable > 0
         data = fread(udpReceiver, udpReceiver.bytesavailable, 'uint8');
