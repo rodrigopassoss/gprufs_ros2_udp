@@ -73,6 +73,7 @@ t = 0;
 while t < duracao
     tic
     % Verifica se há dados disponíveis
+    flushinput(udpReceiver);
     if udpReceiver.BytesAvailable > 0
         data = fread(udpReceiver, udpReceiver.BytesAvailable, 'uint8');
 
